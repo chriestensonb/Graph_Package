@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 class Graph:
     def __init__(self, num_vertices, edges):
 
-        self.numVertices = num_vertices
+        self.num_vertices = num_vertices
         self.Edges = edges
         self.num_edges = np.shape(edges)[0]
 
     def get_num_vertices(self):
 
-        return self.numVertices
+        return self.num_vertices
 
     def get_num_edges(self):
 
@@ -24,7 +24,7 @@ class Graph:
 
     def get_Euler_char(self):
 
-        return self.numVertices - self.num_edges
+        return self.num_vertices - self.num_edges
 
     def add_edge(self, head, tail):
 
@@ -41,7 +41,7 @@ class Graph:
 
     def add_vertex(self, num):
 
-        self.numVertices += 1
+        self.num_vertices += 1
 
         for e in self.Edges:
 
@@ -64,7 +64,7 @@ class Graph:
             if e[1] > num:
                 e[1] -= 1
 
-        self.numVertices -= 1
+        self.num_vertices -= 1
 
     def degree_of_vertex(self, vertex):
 
@@ -116,7 +116,7 @@ class Graph:
 
     def incidence_matrix(self):
 
-        matrix = np.zeros((self.numVertices, self.numVertices))
+        matrix = np.zeros((self.num_vertices, self.num_vertices))
 
         for e in self.Edges:
             matrix[e[0], e[1]] += 1
@@ -173,7 +173,7 @@ class Graph:
 
     def one_boundary_matrix(self):
 
-        n = self.numVertices
+        n = self.num_vertices
         m = self.num_edges
         edges = self.Edges
         matrix = np.zeros((n, m), dtype=int)
@@ -188,7 +188,7 @@ class Graph:
 
     def calc_betti_nums(self):
 
-        n = self.numVertices
+        n = self.num_vertices
         m = self.num_edges
         edges = self.Edges
         matrix = np.zeros((n, m), dtype=int)
@@ -207,7 +207,7 @@ class Graph:
 
     def draw_graph(self):
 
-        n = self.numVertices
+        n = self.num_vertices
         edges = self.Edges
         new_x = []
         new_y = []
