@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import queue
 
 
 class Graph:
@@ -162,15 +163,6 @@ class Graph:
 
         return two_boundary_matrix
 
-    # ==============================================================================
-    #     calc_betti_nums:
-    #     Input: E is a m-by-2 matrix, each row of which represents
-    #     a directed edge in a graph with n verticies.
-    #
-    #     Function: Calculates the first, b0, and second, b1, betti numbers of the graph
-    #     defined by E, and returns the ordered pair [b0,b1].
-    # ==============================================================================
-
     def one_boundary_matrix(self):
 
         n = self.num_vertices
@@ -185,6 +177,15 @@ class Graph:
                 matrix[edges[i][1], i] = -1
 
         return matrix
+
+    # ==============================================================================
+    #     calc_betti_nums:
+    #     Input: E is a m-by-2 matrix, each row of which represents
+    #     a directed edge in a graph with n verticies.
+    #
+    #     Function: Calculates the first, b0, and second, b1, betti numbers of the graph
+    #     defined by E, and returns the ordered pair [b0,b1].
+    # ==============================================================================
 
     def calc_betti_nums(self):
 
@@ -233,3 +234,45 @@ class Graph:
         plt.ylim(-1.1, 1.1)
 
         plt.show()
+
+    def breadth_first_search(self, root_vertex, goal_vertex):
+        visited = set([])
+        search_queue = queue.Queue(maxsize=-1)
+        visited.add(root_vertex)
+        search_queue.put(root_vertex)
+        while not search_queue.empty():
+            current_vertex = search_queue.get()
+            if current_vertex == goal_vertex:
+                path = [root_vertex]
+                while not search_queue.empty():
+                    next_vertex = search_queue.get()
+                    path.append(next_vertex)
+                path.append(goal_vertex)
+                return path
+            else:
+                pass
+            for vertex in self.adjacent_vertices(current_vertex):
+                if vertex not in visited:
+                    visited.add(vertex)
+                    search_queue.put(vertex)
+        return []
+
+    def depth_first_search(self, root_vertex, goal_vertex):
+        visited = set([])
+        search_stack = [root_vertex]
+        while len(search_stack) > 0:
+            current_vertex = search_stack.pop(-1)
+            if current_vertex == goal_vertex:
+                path = [root_vertex]
+                while len(search_stack) > 0:
+                    next_vertex = search_stack.pop(-1)
+                    path.append(next_vertex)
+                path.append(goal_vertex)
+                return path
+            if current_vertex not in visited:
+                visited.add(current_vertex)
+                for adjacent_vertex in self.adjacent_vertices(current_vertex):
+                    search_stack.append(adjacent_vertex)
+            else:
+                pass
+        return []
